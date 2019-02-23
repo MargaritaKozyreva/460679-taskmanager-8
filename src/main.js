@@ -2,12 +2,43 @@
 
 const mainFilter = document.querySelector(`.main__filter`);
 const boardTasks = document.querySelector(`.board__tasks`);
-const getRandomCount = (min, max) => Math.floor(Math.random() * (max - min) + min);
-let arrayFilterName = [];
+const getRandomCount = (min, max) => Math.floor(min + Math.random() * (max + 1 - min));
+const countCards = 7;
+
+const filters = [{
+  type: `radio`,
+  caption: `filter__all`,
+  isChecked: true,
+  isDisabled: false
+},
+{
+  type: `radio`,
+  caption: `filter__overdue`,
+  isDisabled: true
+},
+{
+  type: `radio`,
+  caption: `filter__today`,
+  isDisabled: true
+},
+{
+  type: `radio`,
+  caption: `filter__favorites`,
+},
+{
+  type: `radio`,
+  caption: `filter__repeating`,
+},
+{
+  type: `radio`,
+  caption: `filter__tags`,
+},
+{
+  type: `radio`,
+  caption: `filter__archive`,
+}];
 
 const renderFilter = (type, caption, isChecked = false, isDisabled = false) => {
-
-  arrayFilterName.push(caption);
   const filterTitle = caption.split(`__`)[1];
 
   return `
@@ -24,30 +55,16 @@ const renderFilter = (type, caption, isChecked = false, isDisabled = false) => {
      `;
 };
 
-
-//  _________________________________
-// Я бы этот блок поместила бы в функцию, но не знаю как это половчее бы сделать.
-// Очень надеюсь что подскажешь как это можно правильно сделать!
-//
-
-mainFilter.insertAdjacentHTML(`beforeend`, renderFilter(`radio`, `filter__all`, true));
-mainFilter.insertAdjacentHTML(`beforeend`, renderFilter(`radio`, `filter__overdue`, false, true));
-mainFilter.insertAdjacentHTML(`beforeend`, renderFilter(`radio`, `filter__today`, false, true));
-mainFilter.insertAdjacentHTML(`beforeend`, renderFilter(`radio`, `filter__favorites`));
-mainFilter.insertAdjacentHTML(`beforeend`, renderFilter(`radio`, `filter__repeating`));
-mainFilter.insertAdjacentHTML(`beforeend`, renderFilter(`radio`, `filter__tags`));
-mainFilter.insertAdjacentHTML(`beforeend`, renderFilter(`radio`, `filter__archive`));
-
-//  _________________________________
-
+filters.forEach(function (filter) {
+  mainFilter.insertAdjacentHTML(`beforeend`, renderFilter(`${filter.type}`, `${filter.caption}`, filter.isChecked, filter.isDisabled));
+});
 
 mainFilter.addEventListener(`click`, function () {
-  arrayFilterName.forEach(function () {
-    boardTasks.innerHTML = ``;
-    for (let i = 0; i < getRandomCount(1, arrayFilterName.length); i++) {
-      boardTasks.insertAdjacentHTML(`beforeend`, renderCard());
-    }
-  });
+  const getRandomCardsCount = getRandomCount(1, countCards);
+  boardTasks.innerHTML = ``;
+  for (let i = 0; i < getRandomCardsCount; i++) {
+    boardTasks.insertAdjacentHTML(`beforeend`, renderCard());
+  }
 });
 
 const renderCard = () => {
@@ -346,6 +363,6 @@ const renderCard = () => {
 </article> `;
 };
 
-for (let i = 0; i < 7; i++) {
+for (let i = 0; i < countCards; i++) {
   boardTasks.insertAdjacentHTML(`beforeend`, renderCard());
 }
