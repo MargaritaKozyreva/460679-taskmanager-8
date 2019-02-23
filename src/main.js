@@ -3,7 +3,7 @@
 const mainFilter = document.querySelector(`.main__filter`);
 const boardTasks = document.querySelector(`.board__tasks`);
 const getRandomCount = (min, max) => Math.floor(min + Math.random() * (max + 1 - min));
-const countCards = 7;
+const CARDS_COUNT = 7;
 
 const filters = [{
   type: `radio`,
@@ -55,16 +55,19 @@ const renderFilter = (type, caption, isChecked = false, isDisabled = false) => {
      `;
 };
 
-filters.forEach(function (filter) {
-  mainFilter.insertAdjacentHTML(`beforeend`, renderFilter(`${filter.type}`, `${filter.caption}`, filter.isChecked, filter.isDisabled));
-});
+const templateFilter = filters.map(function (filter) {
+  return renderFilter(`${filter.type}`, `${filter.caption}`, filter.isChecked, filter.isDisabled);
+}).join(``);
+mainFilter.insertAdjacentHTML(`beforeend`, templateFilter);
 
 mainFilter.addEventListener(`click`, function () {
-  const getRandomCardsCount = getRandomCount(1, countCards);
+  const getRandomCardsCount = getRandomCount(1, CARDS_COUNT);
   boardTasks.innerHTML = ``;
+  let templateCard = ``;
   for (let i = 0; i < getRandomCardsCount; i++) {
-    boardTasks.insertAdjacentHTML(`beforeend`, renderCard());
+    templateCard += renderCard();
   }
+  boardTasks.insertAdjacentHTML(`beforeend`, templateCard);
 });
 
 const renderCard = () => {
@@ -359,10 +362,10 @@ const renderCard = () => {
         <button class="card__delete" type="button">delete</button>
       </div>
     </div>
-  </form
+  </form>
 </article> `;
 };
 
-for (let i = 0; i < countCards; i++) {
+for (let i = 0; i < CARDS_COUNT; i++) {
   boardTasks.insertAdjacentHTML(`beforeend`, renderCard());
 }
