@@ -1,12 +1,14 @@
-const main_filter = document.querySelector(`.main__filter`);
-const board_tasks = document.querySelector(`.board__tasks`);
-const get_random_count = (min, max) => Math.floor(Math.random() * (max - min) + min);
-let array_filter_name = [];
+'use strict';
 
-const render_filter = (type, caption, is_checked = false, is_disabled = false) => {
+const mainFilter = document.querySelector(`.main__filter`);
+const boardTasks = document.querySelector(`.board__tasks`);
+const getRandomCount = (min, max) => Math.floor(Math.random() * (max - min) + min);
+let arrayFilterName = [];
 
-  array_filter_name.push(caption);
-  const filter_title = caption.split(`__`)[1];
+const renderFilter = (type, caption, isChecked = false, isDisabled = false) => {
+
+  arrayFilterName.push(caption);
+  const filterTitle = caption.split(`__`)[1];
 
   return `
   <input
@@ -14,41 +16,41 @@ const render_filter = (type, caption, is_checked = false, is_disabled = false) =
     id="${caption}"
     class="filter__input visually-hidden"
     name="filter"
-    ${is_disabled ? " disabled" : ""}
-    ${is_checked ? " checked" : ""}
+    ${isDisabled ? `disabled` : ``}
+    ${isChecked ? `checked` : ``}
     />
     <label for="${caption}" class = "filter__label">
-    ${filter_title} <span class="${caption}-count">${get_random_count(1,100)}</span></label>
-  `
-}
+    ${filterTitle} <span class="${caption}-count">${getRandomCount(1, 100)}</span></label>
+     `;
+};
 
 
-//_________________________________
+//  _________________________________
 // Я бы этот блок поместила бы в функцию, но не знаю как это половчее бы сделать.
 // Очень надеюсь что подскажешь как это можно правильно сделать!
 //
 
-main_filter.insertAdjacentHTML(`beforeend`, render_filter(`radio`, `filter__all`, true));
-main_filter.insertAdjacentHTML(`beforeend`, render_filter(`radio`, `filter__overdue`, false, true));
-main_filter.insertAdjacentHTML(`beforeend`, render_filter(`radio`, `filter__today`, false, true));
-main_filter.insertAdjacentHTML(`beforeend`, render_filter(`radio`, `filter__favorites`));
-main_filter.insertAdjacentHTML(`beforeend`, render_filter(`radio`, `filter__repeating`));
-main_filter.insertAdjacentHTML(`beforeend`, render_filter(`radio`, `filter__tags`));
-main_filter.insertAdjacentHTML(`beforeend`, render_filter(`radio`, `filter__archive`));
+mainFilter.insertAdjacentHTML(`beforeend`, renderFilter(`radio`, `filter__all`, true));
+mainFilter.insertAdjacentHTML(`beforeend`, renderFilter(`radio`, `filter__overdue`, false, true));
+mainFilter.insertAdjacentHTML(`beforeend`, renderFilter(`radio`, `filter__today`, false, true));
+mainFilter.insertAdjacentHTML(`beforeend`, renderFilter(`radio`, `filter__favorites`));
+mainFilter.insertAdjacentHTML(`beforeend`, renderFilter(`radio`, `filter__repeating`));
+mainFilter.insertAdjacentHTML(`beforeend`, renderFilter(`radio`, `filter__tags`));
+mainFilter.insertAdjacentHTML(`beforeend`, renderFilter(`radio`, `filter__archive`));
 
-//_________________________________
+//  _________________________________
 
 
-main_filter.addEventListener('click', function () {
-  array_filter_name.forEach(element => {
-    board_tasks.innerHTML = '';
-    for (let i = 0; i < get_random_count(1, array_filter_name.length); i++) {
-      board_tasks.insertAdjacentHTML(`beforeend`, render_card());
+mainFilter.addEventListener(`click`, function () {
+  arrayFilterName.forEach(function () {
+    boardTasks.innerHTML = ``;
+    for (let i = 0; i < getRandomCount(1, arrayFilterName.length); i++) {
+      boardTasks.insertAdjacentHTML(`beforeend`, renderCard());
     }
-  })
-})
+  });
+});
 
-const render_card = () => {
+const renderCard = () => {
   return `
   <article class="card card--blue">
   <form class="card__form" method="get">
@@ -341,9 +343,9 @@ const render_card = () => {
       </div>
     </div>
   </form
-</article> `
-}
+</article> `;
+};
 
 for (let i = 0; i < 7; i++) {
-  board_tasks.insertAdjacentHTML(`beforeend`, render_card());
+  boardTasks.insertAdjacentHTML(`beforeend`, renderCard());
 }
