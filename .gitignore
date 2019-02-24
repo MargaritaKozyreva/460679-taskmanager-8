@@ -1,7 +1,3 @@
-# Ignore bundler config.
-../public/bundle.js
-../public/bundle.js.map
-
 # Файлы и папки операционной системы
 .DS_Store
 Thumbs.db
@@ -16,4 +12,4 @@ Thumbs.db
 node_modules/
 
 # Папка с собранными файлами проекта
-build/
+public/
