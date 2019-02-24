@@ -7,40 +7,40 @@ const getRandomCount = (min, max) => Math.floor(min + Math.random() * (max + 1 -
 const CARDS_COUNT = 7;
 
 const filters = [{
-    type: `radio`,
-    caption: `filter__all`,
-    isChecked: true,
-    isDisabled: false
-  },
-  {
-    type: `radio`,
-    caption: `filter__overdue`,
-    isDisabled: true
-  },
-  {
-    type: `radio`,
-    caption: `filter__today`,
-    isDisabled: true
-  },
-  {
-    type: `radio`,
-    caption: `filter__favorites`,
-  },
-  {
-    type: `radio`,
-    caption: `filter__repeating`,
-  },
-  {
-    type: `radio`,
-    caption: `filter__tags`,
-  },
-  {
-    type: `radio`,
-    caption: `filter__archive`,
-  }
+  type: `radio`,
+  caption: `filter__all`,
+  isChecked: true,
+  isDisabled: false
+},
+{
+  type: `radio`,
+  caption: `filter__overdue`,
+  isDisabled: true
+},
+{
+  type: `radio`,
+  caption: `filter__today`,
+  isDisabled: true
+},
+{
+  type: `radio`,
+  caption: `filter__favorites`,
+},
+{
+  type: `radio`,
+  caption: `filter__repeating`,
+},
+{
+  type: `radio`,
+  caption: `filter__tags`,
+},
+{
+  type: `radio`,
+  caption: `filter__archive`,
+}
 ];
 
-const templateFilter = filters.map(filter => {
+const templateFilter = filters.map((filter) => {
   return renderFilter(`${filter.type}`, `${filter.caption}`, filter.isChecked, filter.isDisabled, getRandomCount(1, 100));
 }).join(``);
 mainFilter.insertAdjacentHTML(`beforeend`, templateFilter);
